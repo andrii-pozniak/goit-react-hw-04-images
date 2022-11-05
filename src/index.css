@@ -1,4 +1,6 @@
 @import-normalize; /* bring in normalize.css styles */
+@import './components/ImageGallery/ImageGallery.module.css';
+@import './components/SearchBar/SearchBar.module.css';
 
 body {
   margin: 0;
