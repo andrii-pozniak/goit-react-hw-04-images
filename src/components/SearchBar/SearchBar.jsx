@@ -1,15 +1,18 @@
 import { Component } from 'react';
 import s from "components/SearchBar/SearchBar.module.css";
+import { FcSearch } from "react-icons/fc";
 
 export default class SearchBar extends Component {
 
     state = {
-        imageName: ''
+        imageName: '',
+        
+        page: 1,
     }
 
     handleNameChange = event => {
     this.setState({imageName: event.currentTarget.value.toLowerCase()});
-        console.log(event.currentTarget.value)
+        
     };
 
     handleSubmit = event => {
@@ -22,26 +25,27 @@ export default class SearchBar extends Component {
         }
 
         this.props.onSubmit(this.state.imageName);
-        this.setState({imageName: ''});
+        this.setState({imageName: '',  page: 1,});
     }
 
     render()
 
     {return (<header className={s.SearchBar}>
 <form onSubmit={this.handleSubmit} className={s.SearchForm}>
-  <button type="submit" className={s.SearchForm_button}>
-    <span className={s.SearchForm_button_label}>Search</span>
-  </button>
+  
 
   <input
     className={s.SearchForm_input}
     type="text"
-    // autocomplete="off"
-    // autofocus
+   
     placeholder="Search images and photos"
     value={this.state.imageName}
     onChange={this.handleNameChange}
   />
+  <button type="submit" className={s.SearchForm_button}>
+    <FcSearch/>
+   
+  </button>
 </form>
 </header>
 )}
