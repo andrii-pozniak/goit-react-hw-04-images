@@ -52,8 +52,8 @@ export default class ImageGallery extends Component {
         const {modalImage} = this.props
 
         if(status ===  'pending' ) {
-            return <div> <RotatingLines
-          
+            return <div className={s.Loading}> <RotatingLines
+            
             margin-right="auto"
             margin-left="auto"
             strokeColor="grey"
@@ -70,10 +70,13 @@ export default class ImageGallery extends Component {
 
         if(status === 'resolve'){
            
-            return  <ul className={s.ImageGallery}>        
+            return  <div >
+                 <ul className={s.ImageGallery}>        
                 <ImageGalleryItem images={images} onShowModal={modalImage}/> 
                 <div className={s.LoadMore}><Button onClick={this.loadMore}/></div>
-             </ul>
+                </ul>
+            </div>
+           
             
           
            
