@@ -30,7 +30,7 @@ export default class SearchBar extends Component {
 
     render()
 
-    {return (<header className={s.SearchBar}>
+    {return (<header className={ s.SearchBar }>
 <form onSubmit={this.handleSubmit} className={s.SearchForm}>
   
 
