@@ -1,4 +1,5 @@
 import { Component } from 'react';
+
 import  ImageGallery  from "./ImageGallery/ImageGallery";
 import SearchBar  from "components/SearchBar/SearchBar";
 
