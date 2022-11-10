@@ -16,7 +16,9 @@ export default class ImageGallery extends Component {
         showModal: false,
         error: null,
         status: 'idle',
+      
     }
+  
     onShowModal = () => {
         this.props.modalImage(this.state.showModal);
        
@@ -67,11 +69,13 @@ export default class ImageGallery extends Component {
         }
 
         if(status === 'resolve'){
-           
+           console.log('images.length', images.length)
             return  <div >
-                 <ul className={s.ImageGallery}>        
+                 <ul className={s.ImageGallery}>  
+                  
                 <ImageGalleryItem images={images} onShowModal={modalImage}/> 
-                <div className={s.LoadMore}><Button onClick={this.loadMore}/></div>
+                <div className={s.LoadMore} >
+                  {!(images.length < 12) && <Button onClick={this.loadMore} /> }   </div>
                 </ul>
             </div>
            
