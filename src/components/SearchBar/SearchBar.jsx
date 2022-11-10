@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import s from "components/SearchBar/SearchBar.module.css";
-import { FcSearch } from "react-icons/fc";
+import { IoIosSearch } from "react-icons/io";
 
 export default class SearchBar extends Component {
 
@@ -43,7 +43,7 @@ export default class SearchBar extends Component {
     onChange={this.handleNameChange}
   />
   <button type="submit" className={s.SearchForm_button}>
-    <FcSearch/>
+  <IoIosSearch/>
    
   </button>
 </form>
