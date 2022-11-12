@@ -3,7 +3,6 @@ import axios from "axios";
 import {  ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 import { Button } from "components/Button/Button";
 import  s  from "components/ImageGallery/ImageGallery.module.css";
-import { RotatingLines } from  'react-loader-spinner'
 
 const BASE_URL = `https://pixabay.com/api/`
 const KEY = '30111501-80dfaf6bf0e872b32b653e61a'
@@ -12,73 +11,85 @@ export default class ImageGallery extends Component {
     state = {    
         page: 1,
         images: [],
-        isLoading: false,
+        isLoader: false,
         showModal: false,
         error: null,
         status: 'idle',
       
     }
-  
+     
     onShowModal = () => {
         this.props.modalImage(this.state.showModal);
-       
-        console.log(this.props.modalImage())
+     
     }
    
  async componentDidUpdate (prevPops, prevState) {
-      
-        if(prevState.page !== this.state.page || prevPops.imageName !== this.props.imageName) {
-            this.setState({status: 'pending'})
-
+    if(prevState.isLoader !== this.state.isLoader){
+        console.log('prevState.isLoader', prevState.isLoader)
+        console.log('this.state.isLoader', this.state.isLoader)
+        this.setState({isLoader: true})
+    }
+        
+        if(prevState.page !== this.state.page || prevPops.imageName !== this.props.imageName ) {
+            this.setState({
+                status: 'pending',
+               })
+        
             try {
-                const response = await axios.get(`${BASE_URL}?key=${KEY}&q=${this.props.imageName}&orientation=horizontal&page=${this.state.page}&image_type=photo`);
-            this.setState({images: [ ...this.state.images, ...response.data.hits], status: 'resolve' });
+                const response = await axios.get(`${BASE_URL}?key=${KEY}&q=${this.props.imageName}&orientation=horizontal&page=${this.state.page}&per_page=12&image_type=photo`);
+            this.setState({images: [...response.data.hits, ...this.state.images,], 
+                status: 'resolve',
+                isLoader: false
+             });
+               console.log(this.state.images)
+               console.log(response.data.hits)
+        
                
             } catch (error) {this.setState({error, status: 'rejected'})
             this.props.modalImage()
-         
-            }       
+              
+            }finally {
+                this.setState({isLoader: false})
+            }
+            this.props.showLoading(this.state.isLoader)
+                
+            }     
+           
         }
-    }
+      
     loadMore = () => {
         this.setState ( prevState => ({
           page: prevState.page +1,
-     
+          
         }))
+        
       }
      
     render() {
-        const { status, error, images} = this.state;
+        const { status, images} = this.state;
         const {modalImage} = this.props
 
-        if(status ===  'pending' ) {
-            return <div className={s.Loading}> <RotatingLines
-            
-            margin-right="auto"
-            margin-left="auto"
-            strokeColor="grey"
-            strokeWidth="5"
-            animationDuration="0.75"
-            width="96"
-            visible={true}
-          /></div>
-        }
-
-        if(status === 'rejected'){
-            return <h1>{error.massage}</h1>
-        }
+       
 
         if(status === 'resolve'){
-           console.log('images.length', images.length)
+           
             return  <div >
                  <ul className={s.ImageGallery}>  
-                  
-                <ImageGalleryItem images={images} onShowModal={modalImage}/> 
+                 {images.map(({id, webformatURL, largeImageURL, tags}) => (
+                     <ImageGalleryItem 
+                     key={id} 
+                     webformatURL={webformatURL}
+                     largeImageURL={largeImageURL}
+                     tags={tags}
+                     onShowModal={modalImage}/>
+                 ))} 
+                
                 <div className={s.LoadMore} >
                   {!(images.length < 12) && <Button onClick={this.loadMore} /> }   </div>
                 </ul>
+                
             </div>
-           
+          
         }
      
     }

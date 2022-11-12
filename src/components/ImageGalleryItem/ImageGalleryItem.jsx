@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import s from "components/ImageGalleryItem/ImageGalleryItem.module.css";
 
-export const ImageGalleryItem = ({images, onShowModal}) => {
+export const ImageGalleryItem = ({id, webformatURL, largeImageURL, tags, onShowModal}) => {
    
-    return images.map( ({id, webformatURL, largeImageURL, tags}) =>  (<li key={id} className={s.ImageGalleryItem}>
+    return   <li key={id} className={s.ImageGalleryItem}>
     <img onClick={() => onShowModal(largeImageURL) } src={webformatURL} alt={tags} width='420px' height='250px'/>
-  </li>) )
+  </li>
 };
 ImageGalleryItem.propTypes = {
   images: PropTypes.arrayOf(PropTypes.object),
