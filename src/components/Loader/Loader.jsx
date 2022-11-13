@@ -1,9 +1,8 @@
 import { RotatingLines } from  'react-loader-spinner'
-
+import s from "components/Loader/Loader.module.css";
 
 export const Loader = ({isLoader}) => {
-    console.log('isLoader', {isLoader})
-    return <div > <RotatingLines         
+    return <div className={s.Loading}> <RotatingLines         
     margin-right="auto"
     margin-left="auto"
     strokeColor="grey"
