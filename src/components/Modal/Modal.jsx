@@ -1,36 +1,36 @@
-import { Component } from "react";
+// import { useState } from "react";
 import s from "components/Modal/Modal.module.css";
 
-export default class Modal extends Component {
+export default function Modal ({onClickModal, children}) {
  
-  componentDidMount () {
+  function escapeButton() {
     console.log(`Modal componentDidMount`)
     window.addEventListener('keydown', evt => {
       console.log(evt.code)
       if(evt.code === 'Escape') {
         
-        this.props.onClickModal()
+        onClickModal()
       }
     })
-  }
-  
-  handleCloseModal = evt => {
+  } 
+  escapeButton()
+ const handleCloseModal = evt => {
     if(evt.currentTarget === evt.target) {
      
-      this.props.onClickModal()
+      onClickModal()
     }
   }
 
-  render() {
+  
    
-    return (<div className={ s.Overlay } onClick={this.handleCloseModal}>
+    return (<div className={ s.Overlay } onClick={handleCloseModal}>
   <div className={s.Modal}  >
-  {this.props.children}
+  {children}
   </div>
 </div>)
 
 
-  }
+  
   
 }
 
