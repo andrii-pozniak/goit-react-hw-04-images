@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import {Loader} from "components/Loader/Loader";
 import axios from "axios";
+import { ToastContainer } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import  {ImageGallery}  from "./ImageGallery/ImageGallery";
 import SearchBar  from "components/SearchBar/SearchBar";
 
@@ -66,7 +68,7 @@ export default function App () {
    
   const showLoading = isLoader => {
     setIsLoader(isLoader)
-    console.log('isLoader', setIsLoader(isLoader) )
+    
   }
   const loadMore = () => {
     setPage( page+1)
@@ -83,6 +85,7 @@ export default function App () {
        </Modal>}
        {isLoader && <Loader />}
      
+       <ToastContainer/>
       </>
       
     );

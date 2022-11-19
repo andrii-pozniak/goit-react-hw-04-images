@@ -1,44 +1,55 @@
-import { Component } from 'react';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import s from "components/SearchBar/SearchBar.module.css";
 import { IoIosSearch } from "react-icons/io";
 
-export default class SearchBar extends Component {
-
-    state = {
-        imageName: '',
-        images: [],
-        page: 1,
-    }
-
-    handleNameChange = event => {
-    this.setState({imageName: event.currentTarget.value.toLowerCase()});
+export default function SearchBar({onSubmit}) {
+  
+    
+      const [imageName, setImageName] = useState('');
+     
+    const handleNameChange = event => {
+      setImageName( event.currentTarget.value.toLowerCase());
         
     };
 
-    handleSubmit = event => {
+    const handleSubmit = event => {
 
         event.preventDefault();
        
-        if(this.state.imageName.trim() === '') {
-            alert('do not name image');
+        if(imageName.trim() === '') {
+          toast.error('do not name image',
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
+            
             return;
         }
-        this.props.onSubmit(this.state.imageName, this.state.images);
-        this.setState({imageName: '',  page: 1, images: []});
+        
+        setImageName( '')        
+        onSubmit(imageName)
     }
 
-    render()
+  
 
-    {return (<header className={ s.SearchBar }>
-<form onSubmit={this.handleSubmit} className={s.SearchForm}>
+    return (<header className={ s.SearchBar }>
+<form onSubmit={handleSubmit} className={s.SearchForm}>
   
   <input
     className={s.SearchForm_input}
     type="text"
    
     placeholder="Search images and photos"
-    value={this.state.imageName}
-    onChange={this.handleNameChange}
+    value={imageName}
+    onChange={handleNameChange}
   />
   <button type="submit" className={s.SearchForm_button}>
   <IoIosSearch/>
@@ -46,5 +57,5 @@ export default class SearchBar extends Component {
   </button>
 </form>
 </header>
-)}
+)
 };
