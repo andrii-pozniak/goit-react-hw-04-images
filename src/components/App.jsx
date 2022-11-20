@@ -26,6 +26,7 @@ export default function App () {
   const handleFormSubmit = (imageName) => {
     setImageName(imageName)
     setImages([])
+    setPage(1)
     console.log('status', status)
    
   }

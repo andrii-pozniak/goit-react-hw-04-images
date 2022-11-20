@@ -6,16 +6,15 @@ import { IoIosSearch } from "react-icons/io";
 
 export default function SearchBar({onSubmit}) {
   
-    
       const [imageName, setImageName] = useState('');
-     
+      
     const handleNameChange = event => {
       setImageName( event.currentTarget.value.toLowerCase());
         
     };
 
     const handleSubmit = event => {
-
+      
         event.preventDefault();
        
         if(imageName.trim() === '') {
@@ -34,7 +33,7 @@ export default function SearchBar({onSubmit}) {
             return;
         }
         
-        setImageName( '')        
+        setImageName( '')       
         onSubmit(imageName)
     }
 
